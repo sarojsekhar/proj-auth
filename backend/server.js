@@ -15,9 +15,9 @@ app.use(cors());
 
     async function connectDB() {
         await client.connect();
-        const db = client.db("authDB");
+        const db = client.db("proj_auth");
         usersCollection = db.collection("users");
-        console.log("MongoDB connected!....");
+        console.log("MongoDB connected proj_auth !....");
     }
 
     connectDB();
@@ -26,7 +26,10 @@ app.use(cors());
 // Register API endpoint start
     app.post("/api/register", async (req, res) => {
         try{
+            console.log(req.body);
             const { username, email, password } = req.body;
+            
+            console.log(username, email, password);
             const existingUser = usersCollection.findOne({ email });
             if ( existingUser ) {
                 return res.status(400).json({ message: "User already exists" });
